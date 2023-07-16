@@ -7,14 +7,28 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 2, 0, 0, 0],
-    [0, 0, 2, 2, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0],
+    [0, 0, 0, 1, 2, 3, 0, 0],
+    [0, 0, 3, 2, 1, 0, 0, 0],
+    [0, 0, 0, 3, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+  const newBoard: number[][] = JSON.parse(JSON.stringify(board));
+  for (let py = 0; py < 8; py++) {
+    for (let px = 0; px < 8; px++) {
+      console.log(px, py);
+    }
+  }
+  for (let r = 0; r < 8; r++) {
+    for (let s = 0; s < 8; s++) {
+      if (board[r][s] === 3 - turnColor && board[r - 1][s] === turnColor && board[r + 1][s] === 0) {
+        board[r + 1][s] = 3;
+        break;
+      }
+    }
+  }
   const onClick = (x: number, y: number) => {
-    const newBoard: number[][] = JSON.parse(JSON.stringify(board));
     console.log(x, y);
     const directions = [
       [0, -1],
@@ -62,7 +76,7 @@ const Home = () => {
               {color !== 0 && (
                 <div
                   className={styles.stone}
-                  style={{ background: color === 1 ? '#0007' : '#fff' }}
+                  style={{ background: color === 1 ? '#0007' : color === 3 ? '#FFFF00' : '#fff' }}
                 />
               )}
             </div>
