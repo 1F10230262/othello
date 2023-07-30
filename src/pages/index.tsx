@@ -6,7 +6,6 @@ const Home = () => {
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 3, 0, 0, 0],
     [0, 0, 0, 1, 2, 3, 0, 0],
     [0, 0, 3, 2, 1, 0, 0, 0],
@@ -15,21 +14,44 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
   const newBoard: number[][] = JSON.parse(JSON.stringify(board));
-  for (let py = 0; py < 8; py++) {
-    for (let px = 0; px < 8; px++) {
-      console.log(px, py);
-    }
-  }
-  for (let r = 0; r < 8; r++) {
-    for (let s = 0; s < 8; s++) {
-      if (board[r][s] === 3 - turnColor && board[r - 1][s] === turnColor && board[r + 1][s] === 0) {
-        board[r + 1][s] = 3;
-        break;
-      }
-    }
-  }
+  // for (let py = 0; py < 8; py++) {
+  //   for (let px = 0; px < 8; px++) {
+  //     const color = board[py][px];
+  //     console.log(px, py, color);
+  //     if (color === 3) {
+  //       newBoard[py][px] = 0;
+  //     }
+  //     if (
+  //       board[py + 1] !== undefined &&
+  //       board[py + 1][px] === 3 - turnColor &&
+  //       board[py + 2][px] === turnColor &&
+  //       board[py][px - 1] === 0
+  //     ) {
+  //       newBoard[py][px - 1] = 3;
+  //     }
+  //     if (
+  //       board[px - 2] !== undefined &&
+  //       board[py][px - 2] === 3 - turnColor &&
+  //       board[py][px - 1] === turnColor &&
+  //       board[py][px] === 0
+  //     ) {
+  //       newBoard[py][px] = 3;
+  //     }
+  //     if (
+  //       py + 1 >= 0 &&
+  //       py + 1 < board.length &&
+  //       px - 1 >= 0 &&
+  //       px - 1 < board[0].length &&
+  //       board[py + 1][px - 1] !== undefined &&
+  //       board[py + 1][px - 1] === 3 - turnColor &&
+  //       board[py + 2][px - 2] === turnColor &&
+  //       board[py][px] === 0
+  //     ) {
+  //       newBoard[py][px] = 3;
+  //     }
+  //   }
+  // }
   const onClick = (x: number, y: number) => {
-    console.log(x, y);
     const directions = [
       [0, -1],
       [0, 1],
@@ -40,10 +62,10 @@ const Home = () => {
       [-1, -1],
       [-1, 1],
     ];
+    const changeBoard =(x:number, y:number, orange:boolean, turnColor:number)=>{
     for (let m = 0; m < 8; m++) {
       const dx = directions[m][0];
       const dy = directions[m][1];
-      console.log(dx, dy);
       if (
         board[y + dy] !== undefined &&
         board[x + dx] !== undefined &&
@@ -59,11 +81,14 @@ const Home = () => {
               newBoard[y + n * dy][x + n * dx] = turnColor;
             }
             setTurnColor(3 - turnColor);
+            
             break;
           }
         }
       }
     }
+  }
+
     setBoard(newBoard);
   };
 
